@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grace Abayomi | Software & Data Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal:    #0d9488;
+      --teal-lt: #14b8a6;
+      --teal-dk: #0f766e;
+      --bg:      #0a0f1e;
+      --bg2:     #111827;
+      --bg3:     #1e2a3a;
+      --text:    #e2e8f0;
+      --muted:   #94a3b8;
+      --border:  #1e293b;
+      --white:   #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(10,15,30,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 1.2rem; font-weight: 700; color: var(--teal-lt); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: .9rem; font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--teal-lt); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(13,148,136,.18) 0%, transparent 70%),
+                  radial-gradient(ellipse 40% 40% at 80% 80%, rgba(13,148,136,.08) 0%, transparent 70%);
+    }
+    .hero-content { position: relative; max-width: 750px; }
+    .hero-badge {
+      display: inline-block;
+      padding: .35rem 1rem;
+      background: rgba(13,148,136,.15);
+      border: 1px solid rgba(13,148,136,.4);
+      border-radius: 999px;
+      font-size: .8rem; color: var(--teal-lt); letter-spacing: .05em;
+      margin-bottom: 1.5rem;
+    }
+    .hero-name {
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      font-weight: 800; line-height: 1.1;
+      background: linear-gradient(135deg, var(--white) 40%, var(--teal-lt));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--muted); font-weight: 400; margin-bottom: 1.8rem;
+    }
+    .hero-title span { color: var(--teal-lt); font-weight: 600; }
+    .hero-desc {
+      font-size: 1rem; color: var(--muted); max-width: 600px;
+      margin: 0 auto 2.5rem;
+    }
+    .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .75rem 1.8rem; border-radius: 8px;
+      font-size: .95rem; font-weight: 600; cursor: pointer;
+      text-decoration: none; transition: all .25s;
+    }
+    .btn-primary {
+      background: var(--teal); color: var(--white);
+      border: 1px solid var(--teal);
+    }
+    .btn-primary:hover { background: var(--teal-dk); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,148,136,.35); }
+    .btn-outline {
+      background: transparent; color: var(--teal-lt);
+      border: 1px solid rgba(13,148,136,.5);
+    }
+    .btn-outline:hover { background: rgba(13,148,136,.1); transform: translateY(-2px); }
+
+    .hero-stats {
+      display: flex; justify-content: center; gap: 3rem;
+      margin-top: 4rem; flex-wrap: wrap;
+    }
+    .stat { text-align: center; }
+    .stat-num { font-size: 2rem; font-weight: 700; color: var(--teal-lt); }
+    .stat-label { font-size: .8rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 3.5rem; }
+    .section-tag {
+      display: inline-block;
+      font-size: .75rem; text-transform: uppercase; letter-spacing: .12em;
+      color: var(--teal-lt); font-weight: 600; margin-bottom: .75rem;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700; color: var(--white);
+    }
+    .section-line {
+      width: 48px; height: 3px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+      border-radius: 2px; margin: 1rem auto 0;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--bg2); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .about-text p { color: var(--muted); margin-bottom: 1rem; }
+    .about-text p strong { color: var(--teal-lt); }
+    .about-highlights { display: flex; flex-direction: column; gap: 1rem; }
+    .highlight-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--teal);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+    }
+    .highlight-card h4 { color: var(--white); font-size: .95rem; margin-bottom: .25rem; }
+    .highlight-card p { color: var(--muted); font-size: .85rem; }
+
+    /* ── EXPERIENCE ── */
+    .timeline { position: relative; }
+    .timeline::before {
+      content: ''; position: absolute;
+      left: 20px; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(to bottom, var(--teal), transparent);
+    }
+    .job {
+      position: relative;
+      padding: 0 0 2.5rem 3.5rem;
+    }
+    .job-dot {
+      position: absolute; left: 12px; top: 4px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--teal); border: 3px solid var(--bg);
+      box-shadow: 0 0 0 3px rgba(13,148,136,.3);
+    }
+    .job-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .job-card:hover { border-color: var(--teal); transform: translateX(4px); }
+    .job-header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; margin-bottom: .75rem; }
+    .job-title { font-size: 1.05rem; font-weight: 700; color: var(--white); }
+    .job-meta { display: flex; flex-direction: column; align-items: flex-end; gap: .25rem; }
+    .job-company { font-size: .9rem; color: var(--teal-lt); font-weight: 600; }
+    .job-date { font-size: .78rem; color: var(--muted); }
+    .job-location { font-size: .78rem; color: var(--muted); }
+    .job-desc { color: var(--muted); font-size: .9rem; }
+    .job-desc li { margin-bottom: .4rem; list-style: none; padding-left: 1.2em; position: relative; }
+    .job-desc li::before { content: '▸'; position: absolute; left: 0; color: var(--teal); font-size: .75rem; top: .1em; }
+    .job-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .85rem; }
+    .tag {
+      padding: .2rem .65rem; border-radius: 999px;
+      font-size: .72rem; font-weight: 500;
+      background: rgba(13,148,136,.12); color: var(--teal-lt);
+      border: 1px solid rgba(13,148,136,.25);
+    }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--bg2); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+    .skill-group {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color .2s;
+    }
+    .skill-group:hover { border-color: var(--teal); }
+    .skill-group-title {
+      font-size: .8rem; text-transform: uppercase; letter-spacing: .1em;
+      color: var(--teal-lt); font-weight: 700; margin-bottom: 1rem;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .skill-group-title::before { content: ''; width: 20px; height: 2px; background: var(--teal); }
+    .skill-pills { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .skill-pill {
+      padding: .3rem .8rem; border-radius: 6px;
+      font-size: .82rem; font-weight: 500;
+      background: rgba(255,255,255,.05);
+      color: var(--text); border: 1px solid var(--border);
+      transition: all .2s;
+    }
+    .skill-pill:hover { background: rgba(13,148,136,.15); border-color: var(--teal); color: var(--teal-lt); }
+
+    /* ── EDUCATION ── */
+    .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .edu-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      position: relative; overflow: hidden;
+      transition: border-color .2s, transform .2s;
+    }
+    .edu-card:hover { border-color: var(--teal); transform: translateY(-4px); }
+    .edu-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+    }
+    .edu-degree { font-size: 1.05rem; font-weight: 700; color: var(--white); margin-bottom: .3rem; }
+    .edu-school { font-size: .9rem; color: var(--teal-lt); font-weight: 600; margin-bottom: .25rem; }
+    .edu-year { font-size: .8rem; color: var(--muted); margin-bottom: .75rem; }
+    .edu-badge {
+      display: inline-block;
+      padding: .2rem .7rem; border-radius: 999px;
+      font-size: .75rem; font-weight: 600;
+      background: rgba(13,148,136,.15); color: var(--teal-lt);
+      border: 1px solid rgba(13,148,136,.35);
+    }
+
+    /* ── CERTS ── */
+    #certifications { background: var(--bg2); }
+    .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+    .cert-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+      display: flex; align-items: flex-start; gap: .85rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .cert-card:hover { border-color: var(--teal); transform: translateY(-2px); }
+    .cert-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: rgba(13,148,136,.15);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .cert-name { font-size: .88rem; font-weight: 600; color: var(--white); line-height: 1.3; }
+    .cert-date { font-size: .75rem; color: var(--muted); margin-top: .25rem; }
+
+    /* ── VOLUNTEERING ── */
+    .vol-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .vol-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .vol-card:hover { border-color: var(--teal); transform: translateY(-4px); }
+    .vol-role { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: .3rem; }
+    .vol-org { font-size: .9rem; color: var(--teal-lt); font-weight: 600; }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: linear-gradient(135deg, var(--bg3) 0%, var(--bg) 100%);
+      text-align: center;
+    }
+    .contact-links {
+      display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+      margin-top: 2.5rem;
+    }
+    .contact-link {
+      display: flex; align-items: center; gap: .6rem;
+      padding: .9rem 1.6rem;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text); text-decoration: none;
+      font-size: .9rem; font-weight: 500;
+      transition: all .25s;
+    }
+    .contact-link:hover { border-color: var(--teal); color: var(--teal-lt); transform: translateY(-2px); }
+    .contact-link svg { flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    /* ── FADE-IN ANIMATION ── */
+    .fade-up {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .job-header { flex-direction: column; }
+      .job-meta { align-items: flex-start; }
+      nav { padding: 1rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">GA.</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Open to Opportunities</div>
+    <h1 class="hero-name">Grace Abayomi</h1>
+    <p class="hero-title">
+      <span>Software Engineer</span> · <span>Data Engineer</span> · <span>Full-Stack Developer</span>
+    </p>
+    <p class="hero-desc">
+      Results-driven engineer with 5+ years across fintech, blockchain, and public-sector domains
+      in Nigeria and the UK. MSc Data Science (Distinction).
+    </p>
+    <div class="hero-actions">
+      <a href="#experience" class="btn btn-primary">View My Work</a>
+      <a href="#contact" class="btn btn-outline">Get In Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Years Experience</div></div>
+      <div class="stat"><div class="stat-num">8</div><div class="stat-label">Companies</div></div>
+      <div class="stat"><div class="stat-num">🏅</div><div class="stat-label">MSc Distinction</div></div>
+      <div class="stat"><div class="stat-num">AWS</div><div class="stat-label">Certified</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Who I Am</div>
+      <h2 class="section-title">About Me</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text fade-up">
+        <p>
+          I'm a <strong>Software & Data Engineer</strong> based in London, UK, with deep expertise in
+          building scalable backend systems, data pipelines, and full-stack applications.
+        </p>
+        <p>
+          My career spans <strong>fintech, blockchain, payments, and public-sector analytics</strong>,
+          giving me the ability to deliver robust solutions across diverse, high-stakes domains.
+        </p>
+        <p>
+          I hold an <strong>MSc in Data Science (Distinction)</strong> from the University of Salford
+          and an AWS Cloud Practitioner certification, complementing my hands-on engineering experience.
+        </p>
+        <p>
+          I thrive in collaborative, Agile environments and am passionate about clean architecture,
+          test-driven development, and using data to drive meaningful decisions.
+        </p>
+      </div>
+      <div class="about-highlights fade-up">
+        <div class="highlight-card">
+          <h4>Current Role</h4>
+          <p>Application Engineer at Vanguard, London — building robust financial software solutions.</p>
+        </div>
+        <div class="highlight-card">
+          <h4>Academic Excellence</h4>
+          <p>MSc Data Science, Distinction — University of Salford, 2024.</p>
+        </div>
+        <div class="highlight-card">
+          <h4>Global Experience</h4>
+          <p>Worked across Nigeria and the UK in fintech, blockchain, payments, and government sectors.</p>
+        </div>
+        <div class="highlight-card">
+          <h4>Volunteering</h4>
+          <p>Mentoring emerging talent and leading data projects through Statistics Without Borders & Talenvo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Career Journey</div>
+      <h2 class="section-title">Work Experience</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="timeline">
+
+      <!-- Vanguard – App Eng -->
+      <div class="job fade-up">
+        <div class="job-dot"></div>
+        <div class="job-card">
+          <div class="job-header">
+            <span class="job-title">Application Engineer</span>
+            <div class="job-meta">
+              <span class="job-company">Vanguard</span>
+              <span class="job-date">Oct 2024 – Present</span>
+              <span class="job-location">London, UK</span>
+            </div>
+          </div>
+          <ul class="job-desc">
+            <li>Designing and maintaining high-performance financial applications serving global investment operations.</li>
+            <li>Collaborating cross-functionally to deliver resilient, scalable software in a cloud-first environment.</li>
+            <li>Applying engineering best practices — TDD, code review, pair programming — to maintain code quality.</li>
+          </ul>
+          <div class="job-tags">
+            <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">AWS</span>
+            <span class="tag">TDD</span><span class="tag">Agile</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vanguard – Data Eng -->
+      <div class="job fade-up">
+        <div class="job-dot"></div>
+        <div class="job-card">
+          <div class="job-header">
+            <span class="job-title">Data Engineer</span>
+            <div class="job-meta">
+              <span class="job-company">Vanguard</span>
+              <span class="job-date">Jul 2024 – Sep 2024</span>
+              <span class="job-location">London, UK</span>
+            </div>
+          </div>
+          <ul class="job-desc">
+            <li>Built and maintained data pipelines using AWS Glue, Athena, and S3 for large-scale financial datasets.</li>
+            <li>Implemented monitoring and alerting with AWS CloudWatch and EventBridge to ensure pipeline reliability.</li>
+            <li>Supported data migration projects with AWS DMS, reducing manual overhead and improving data accuracy.</li>
+          </ul>
+          <div class="job-tags">
+            <span class="tag">Python</span><span class="tag">AWS Glue</span><span class="tag">Athena</span>
+            <span class="tag">S3</span><span class="tag">DMS</span><span class="tag">CloudWatch</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Crimestoppers -->
+      <div class="job fade-up">
+        <div class="job-dot"></div>
+        <div class="job-card">
+          <div class="job-header">
+            <span class="job-title">Data Scientist (Contract)</span>
+            <div class="job-meta">
+              <span class="job-company">Crimestoppers</span>
+              <span class="job-date">Jan 2024 – Apr 2024</span>
+              <span class="job-location">London, UK</span>
+            </div>
+          </div>
+          <ul class="job-desc">
+            <li>Applied NLP and semantic search techniques to analyse public-sector crime intelligence data.</li>
+            <li>Developed synthetic data generation (SDV) pipelines to enable privacy-safe data sharing and modelling.</li>
+            <li>Delivered actionable insights to inform operational decisions in a sensitive, high-impact environment.</li>
+          </ul>
+          <div class="job-tags">
+            <span class="tag">Python</span><span class="tag">NLP</span><span class="tag">Semantic Search</span>
+            <span class="tag">SDV</span><span class="tag">Data Science</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lithium Digital -->
+      <div class="job fade-up">
+        <div class="job-dot"></div>
+        <div class="job-card">
+          <div class="job-header">
+            <span class="job-title">Software Engineer</span>
+            <div class="job-meta">
+              <span class="job-company">Lithium Digital</span>
+              <span class="job-date">2023</span>
+              <span class="job-location">Manchester, UK</span>
+            </div>
+          </div>
+          <ul class="job-desc">
+            <li>Developed full-stack web applications using modern JavaScript/TypeScript and React.js front ends.</li>
+            <li>Designed RESTful APIs and back-end services with robust test coverage and CI/CD integration.</li>
+            <li>Collaborated in Agile sprints, contributing to delivery of client-facing digital products.</li>
+          </ul>
+          <div class="job-tags">
+            <span class="tag">TypeScript</span><span class="tag">React.js</span>
+            <span class="tag">Node.js</span><span class="tag">REST APIs</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Appzone -->
+      <div class="job fade-up">
+        <div class="job-dot"></div>
+        <div class="job-card">
+          <div class="job-header">
+            <span class="job-title">Software Engineer</span>
+            <div class="job-meta">
+              <span class="job-company">Appzone Group</span>
+              <span class="job-date">2022 – 2023</span>
+              <span class="job-location">Lagos, Nigeria</span>
+            </div>
+          </div>
+          <ul class="job-desc">
+            <li>Built core banking and fintech platform features serving millions of transactions across West Africa.</li>
+            <li>Developed microservices with Java/Spring Boot and .NET, integrated with PostgreSQL and MS SQL Server.</li>
+            <li>Contributed to blockchain-based financial product features, improving transaction security and traceability.</li>
+          </ul>
+          <div class="job-tags">
+            <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">.NET</span>
+            <span class="tag">PostgreSQL</span><span class="tag">Blockchain</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SeerBit -->
+      <div class="job fade-up">
+        <div class="job-dot"></div>
+        <div class="job-card">
+          <div class="job-header">
+            <span class="job-title">Software Developer</span>
+            <div class="job-meta">
+              <span class="job-company">SeerBit</span>
+              <span class="job-date">Jun 2021 – 2022</span>
+              <span class="job-location">Lagos, Nigeria</span>
+            </div>
+          </div>
+          <ul class="job-desc">
+            <li>Developed and maintained payment gateway integrations and merchant-facing APIs processing live transactions.</li>
+            <li>Worked with Golang and Java to build high-throughput, low-latency payment processing services.</li>
+            <li>Collaborated with product and QA teams to ship reliable payment features under tight deadlines.</li>
+          </ul>
+          <div class="job-tags">
+            <span class="tag">Golang</span><span class="tag">Java</span>
+            <span class="tag">Payments</span><span class="tag">MySQL</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DanfoHQ -->
+      <div class="job fade-up">
+        <div class="job-dot"></div>
+        <div class="job-card">
+          <div class="job-header">
+            <span class="job-title">Software Developer</span>
+            <div class="job-meta">
+              <span class="job-company">DanfoHQ</span>
+              <span class="job-date">May 2021 – Aug 2021</span>
+              <span class="job-location">Lagos, Nigeria</span>
+            </div>
+          </div>
+          <ul class="job-desc">
+            <li>Contributed to mobility-tech software solutions connecting commuters with informal transit networks.</li>
+            <li>Built backend services and APIs supporting real-time route and payment functionalities.</li>
+          </ul>
+          <div class="job-tags">
+            <span class="tag">JavaScript</span><span class="tag">Node.js</span><span class="tag">MongoDB</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Semicolon Africa -->
+      <div class="job fade-up">
+        <div class="job-dot"></div>
+        <div class="job-card">
+          <div class="job-header">
+            <span class="job-title">Software Developer Intern</span>
+            <div class="job-meta">
+              <span class="job-company">Semicolon Africa</span>
+              <span class="job-date">Jan 2020 – May 2021</span>
+              <span class="job-location">Lagos, Nigeria</span>
+            </div>
+          </div>
+          <ul class="job-desc">
+            <li>Trained in full-stack software engineering under an intensive, hands-on immersive programme.</li>
+            <li>Built multiple projects applying Java, Spring Boot, React, and relational databases.</li>
+            <li>Developed skills in TDD, pair programming, and human-centered design principles.</li>
+          </ul>
+          <div class="job-tags">
+            <span class="tag">Java</span><span class="tag">Spring Boot</span>
+            <span class="tag">React</span><span class="tag">TDD</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /timeline -->
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Technical Toolkit</div>
+      <h2 class="section-title">Skills</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group fade-up">
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Java</span>
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">C#</span>
+          <span class="skill-pill">Golang</span>
+          <span class="skill-pill">JavaScript</span>
+          <span class="skill-pill">TypeScript</span>
+        </div>
+      </div>
+      <div class="skill-group fade-up">
+        <div class="skill-group-title">Frameworks</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Spring Boot</span>
+          <span class="skill-pill">React.js</span>
+          <span class="skill-pill">Django</span>
+          <span class="skill-pill">.NET</span>
+          <span class="skill-pill">Node.js</span>
+        </div>
+      </div>
+      <div class="skill-group fade-up">
+        <div class="skill-group-title">Databases</div>
+        <div class="skill-pills">
+          <span class="skill-pill">MySQL</span>
+          <span class="skill-pill">PostgreSQL</span>
+          <span class="skill-pill">MS SQL Server</span>
+          <span class="skill-pill">MongoDB</span>
+          <span class="skill-pill">AWS DynamoDB</span>
+        </div>
+      </div>
+      <div class="skill-group fade-up">
+        <div class="skill-group-title">Cloud & DevOps</div>
+        <div class="skill-pills">
+          <span class="skill-pill">AWS</span>
+          <span class="skill-pill">S3</span>
+          <span class="skill-pill">Glue</span>
+          <span class="skill-pill">Athena</span>
+          <span class="skill-pill">ECS</span>
+          <span class="skill-pill">CloudWatch</span>
+          <span class="skill-pill">EventBridge</span>
+          <span class="skill-pill">DMS</span>
+          <span class="skill-pill">Git</span>
+          <span class="skill-pill">GitHub</span>
+          <span class="skill-pill">Bitbucket</span>
+        </div>
+      </div>
+      <div class="skill-group fade-up">
+        <div class="skill-group-title">Data & AI</div>
+        <div class="skill-pills">
+          <span class="skill-pill">NLP</span>
+          <span class="skill-pill">Semantic Search</span>
+          <span class="skill-pill">Synthetic Data (SDV)</span>
+          <span class="skill-pill">Data Pipelines</span>
+          <span class="skill-pill">Machine Learning</span>
+        </div>
+      </div>
+      <div class="skill-group fade-up">
+        <div class="skill-group-title">Methodologies</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Agile / Scrum</span>
+          <span class="skill-pill">TDD</span>
+          <span class="skill-pill">Pair Programming</span>
+          <span class="skill-pill">Design Patterns</span>
+          <span class="skill-pill">Human-Centered Design</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Academic Background</div>
+      <h2 class="section-title">Education</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card fade-up">
+        <div class="edu-degree">MSc Data Science</div>
+        <div class="edu-school">University of Salford</div>
+        <div class="edu-year">Completed May 2024</div>
+        <span class="edu-badge">Distinction</span>
+      </div>
+      <div class="edu-card fade-up">
+        <div class="edu-degree">BSc Geography</div>
+        <div class="edu-school">Olabisi Onabanjo University</div>
+        <div class="edu-year">Graduated July 2017</div>
+        <span class="edu-badge">2:1</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Credentials</div>
+      <h2 class="section-title">Certifications</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card fade-up">
+        <div class="cert-icon">☁️</div>
+        <div>
+          <div class="cert-name">AWS Cloud Practitioner</div>
+          <div class="cert-date">2025</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-icon">🔒</div>
+        <div>
+          <div class="cert-name">IT Security Foundations: Network Security</div>
+          <div class="cert-date">Dec 2025</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-icon">🛡️</div>
+        <div>
+          <div class="cert-name">Learning Threat Modeling for Security Professionals</div>
+          <div class="cert-date">Nov 2025</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-icon">🔐</div>
+        <div>
+          <div class="cert-name">Cybersecurity Awareness: Cybersecurity Terminology</div>
+          <div class="cert-date">Oct 2025</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-icon">📋</div>
+        <div>
+          <div class="cert-name">Project Management Professional (PMP)</div>
+          <div class="cert-date">2019</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-icon">👥</div>
+        <div>
+          <div class="cert-name">Human Resource Management</div>
+          <div class="cert-date">2019</div>
+        </div>
+      </div>
+      <div class="cert-card fade-up">
+        <div class="cert-icon">🗺️</div>
+        <div>
+          <div class="cert-name">Geographic Information Systems (GIS)</div>
+          <div class="cert-date">2017</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VOLUNTEERING -->
+<section id="volunteering">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Giving Back</div>
+      <h2 class="section-title">Volunteering</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="vol-grid">
+      <div class="vol-card fade-up">
+        <div class="vol-role">Project &amp; Client Manager</div>
+        <div class="vol-org">Statistics Without Borders</div>
+        <p style="color:var(--muted);font-size:.88rem;margin-top:.75rem;">
+          Leading data-for-good projects, managing client relationships, and coordinating volunteer statisticians
+          to deliver impactful analyses for non-profit organisations worldwide.
+        </p>
+      </div>
+      <div class="vol-card fade-up">
+        <div class="vol-role">Project Mentor</div>
+        <div class="vol-org">Talenvo Global Residency</div>
+        <p style="color:var(--muted);font-size:.88rem;margin-top:.75rem;">
+          Mentoring emerging engineers and aspiring tech professionals through project-based learning,
+          code reviews, and career guidance in the global tech ecosystem.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">Let's Connect</div>
+      <h2 class="section-title">Get In Touch</h2>
+      <div class="section-line"></div>
+      <p style="color:var(--muted);margin-top:1rem;max-width:480px;margin-left:auto;margin-right:auto;">
+        I'm always open to discussing new opportunities, collaborations, or just a chat about tech.
+      </p>
+    </div>
+    <div class="contact-links fade-up">
+      <a href="mailto:gracebolutife@gmail.com" class="contact-link">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        gracebolutife@gmail.com
+      </a>
+      <a href="https://linkedin.com/in/grace-abayomi-821040153" target="_blank" rel="noopener" class="contact-link">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+          <circle cx="4" cy="4" r="2"/>
+        </svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/Gracie-lab" target="_blank" rel="noopener" class="contact-link">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/>
+        </svg>
+        GitHub
+      </a>
+      <a href="tel:+447824024713" class="contact-link">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.64A2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.08 6.08l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+        </svg>
+        +44 07824 024713
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Grace Abayomi · Built with care · London, UK</p>
+</footer>
+
+<script>
+  // Intersection Observer for fade-up animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Active nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--teal-lt)' : '';
+    });
+  });
+</script>
+</body>
+</html>
